@@ -16,7 +16,7 @@ reader = csv.reader(f, delimiter=';')
 if not os.path.exists('imgs'):
     os.mkdir('imgs')
 
-for row in list(reader)[1:11]:
+for row in list(reader)[1:]:
     os.chdir(rootdir)
     driver = Firefox(firefox_binary = FirefoxBinary('/usr/bin/firefox'), executable_path=os.getcwd() + '/geckodriver', options = options)
     driver.get('https://yandex.ru/images/search?text=' + row[0])
