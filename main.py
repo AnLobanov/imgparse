@@ -8,6 +8,8 @@ from urllib.request import urlretrieve
 options = Options()
 options.headless = True
 
+rootdir = os.getcwd()
+
 f = open('СписокНоменклатур.csv', 'r', encoding='utf-8')
 reader = csv.reader(f, delimiter=';')
 
@@ -15,7 +17,7 @@ if not os.path.exists('imgs'):
     os.mkdir('imgs')
 
 for row in list(reader)[1:11]:
-    os.chdir('/home/anton/Документы/imgparse')
+    os.chdir(rootdir)
     driver = Firefox(firefox_binary = FirefoxBinary('/usr/bin/firefox'), executable_path=os.getcwd() + '/geckodriver', options = options)
     driver.get('https://yandex.ru/images/search?text=' + row[0])
     soup = BeautifulSoup(driver.page_source, features='html5lib')
