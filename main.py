@@ -26,6 +26,7 @@ for row in list(reader)[1:26]:
     os.chdir(rootdir)
 
     # Загружаем страницу и ее код
+    # ОБЯЗАТЕЛЬНО УКАЗЫВАЕМ ПУТЬ К FIREFOX
 
     driver = Firefox(firefox_binary = FirefoxBinary('/usr/bin/firefox'), executable_path=os.getcwd() + '/geckodriver', options = options)
     driver.get('https://yandex.ru/images/search?text=' + row[0])
