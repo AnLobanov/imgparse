@@ -22,7 +22,7 @@ reader = csv.reader(f, delimiter=';')
 if not os.path.exists('imgs'):
     os.mkdir('imgs')
 
-for row in list(reader)[1:26]:
+for row in list(reader)[1:]:
     os.chdir(rootdir)
 
     # Загружаем страницу и ее код
