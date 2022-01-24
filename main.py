@@ -1,6 +1,5 @@
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
-from selenium.webdriver.firefox.firefox_binary import FirefoxBinary
 import csv, os
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
