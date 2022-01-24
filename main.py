@@ -1,6 +1,6 @@
 from selenium.webdriver import Firefox
 from selenium.webdriver.firefox.options import Options
-import csv, os
+import csv, os, random, time
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
 
@@ -39,3 +39,4 @@ for row in list(reader)[1:]:
         os.mkdir(row[1])
         os.chdir(row[1])
         urlretrieve(img, row[1] + '.png')
+    time.sleep(random.uniform(30, 120))
