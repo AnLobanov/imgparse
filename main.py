@@ -21,6 +21,9 @@ reader = csv.reader(f, delimiter=';')
 if not os.path.exists('imgs'):
     os.mkdir('imgs')
 
+delay = random.randint(2, 7)
+
+queue = 0
 for row in list(reader)[1:]:
     os.chdir(rootdir)
 
@@ -39,4 +42,10 @@ for row in list(reader)[1:]:
         os.mkdir(row[1])
         os.chdir(row[1])
         urlretrieve(img, row[1] + '.png')
-    time.sleep(random.uniform(30, 120))
+
+    # Ждем следующий запрос
+
+    queue += 1
+    if queue == delay:
+        time.sleep(random.uniform(30, 120))
+        delay = random.randint(2, 7)
