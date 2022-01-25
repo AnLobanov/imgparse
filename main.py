@@ -11,6 +11,8 @@ options.headless = True
 
 rootdir = os.getcwd()
 
+por = int(input('Какое изобрежение из выдачи по счету скачать: '))
+
 # Подключаемся к файлу в формате CSV с разделителем ;
 
 f = open('СписокНоменклатур.csv', 'r', encoding='utf-8')
@@ -33,14 +35,14 @@ for row in list(reader)[1:]:
         driver.get('https://yandex.ru/images/search?text=' + row[0])
         soup = BeautifulSoup(driver.page_source, features='html5lib')
         driver.quit()
-        img = 'https:' + soup.find('img', {"class": "serp-item__thumb justifier__thumb"}, src = True)['src']
+        img = 'https:' + soup.findAll('img', {"class": "serp-item__thumb justifier__thumb"}, src = True)[por]['src']
     except IndexError:
         time.sleep(random.uniform(10, 20))
         driver = Firefox(executable_path=os.getcwd() + '/geckodriver', options = options)
         driver.get('https://yandex.ru/images/search?text=' + row[0])
         soup = BeautifulSoup(driver.page_source, features='html5lib')
         driver.quit()
-        img = 'https:' + soup.find('img', {"class": "serp-item__thumb justifier__thumb"}, src = True)['src']
+        img = 'https:' + soup.findAll('img', {"class": "serp-item__thumb justifier__thumb"}, src = True)[por]['src']
     os.chdir('imgs')
 
     # Скачиваем 1 изображение из Яндекс.Картинок в папку с артикулом
@@ -48,7 +50,7 @@ for row in list(reader)[1:]:
     if not os.path.exists(row[1]):
         os.mkdir(row[1])
         os.chdir(row[1])
-        urlretrieve(img, row[1] + '.png')
+        urlretrieve(img, row[1] + por + '.png')
 
     # Ждем следующий запрос
 
