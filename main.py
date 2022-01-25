@@ -59,5 +59,3 @@ for row in list(reader)[1:]:
         if queue == delay:
             time.sleep(random.uniform(30, 120))
             delay = random.randint(2, 7)
-    else:
-        print(row[1])
