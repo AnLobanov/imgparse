@@ -50,8 +50,8 @@ for row in list(reader)[1:]:
 
         if not os.path.exists(row[1]):
             os.mkdir(row[1])
-            os.chdir(row[1])
-            urlretrieve(img, row[1] + str(por) + '.png')
+        os.chdir(row[1])
+        urlretrieve(img, row[1] + str(por) + '.png')
 
         # Ждем следующий запрос
 
