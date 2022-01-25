@@ -34,7 +34,7 @@ for row in list(reader)[1:]:
         soup = BeautifulSoup(driver.page_source, features='html5lib')
         driver.quit()
         img = 'https:' + soup.find('img', {"class": "serp-item__thumb justifier__thumb"}, src = True)['src']
-    except:
+    except IndexError:
         time.sleep(random.uniform(10, 20))
         driver = Firefox(executable_path=os.getcwd() + '/geckodriver', options = options)
         driver.get('https://yandex.ru/images/search?text=' + row[0])
