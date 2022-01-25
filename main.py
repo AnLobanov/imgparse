@@ -27,7 +27,7 @@ delay = random.randint(2, 7)
 
 queue = 0
 for row in list(reader)[1:]:
-    if not os.path.isfile(rootdir + '/imgs/' + row[1] + '/' + row[1] + str(por) + '.png'):
+    if not os.path.isfile(rootdir + '/imgs/' + row[1] + '/' + row[1] + '_' + str(por) + '.png'):
         os.chdir(rootdir)
 
         # Загружаем страницу и ее код
@@ -51,7 +51,7 @@ for row in list(reader)[1:]:
         if not os.path.exists(row[1]):
             os.mkdir(row[1])
         os.chdir(row[1])
-        urlretrieve(img, row[1] + str(por) + '.png')
+        urlretrieve(img, row[1] + '_' + str(por) + '.png')
 
         # Ждем следующий запрос
 
