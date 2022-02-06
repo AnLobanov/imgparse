@@ -27,13 +27,12 @@ delay = random.randint(2, 7)
 
 queue = 0
 category = ''
-for row in list(reader)[173:178]:
-    print(row)
+for row in list(reader):
     if row[0] == '':
-        print('КАТЕГОРИЯ')
         category = row[1]
+    if not os.path.exists(rootdir + '/imgs/' + category):
         os.mkdir(rootdir + '/imgs/' + category)
-    else:
+    if not row[0] == '':
         if not os.path.isfile(rootdir + '/imgs/' + category +  '/' + row[0] + '/' + row[0] + '_' + str(por) + '.png'):
             os.chdir(rootdir)
 
@@ -66,3 +65,4 @@ for row in list(reader)[173:178]:
             if queue == delay:
                 time.sleep(random.uniform(30, 120))
                 delay = random.randint(2, 7)
+                queue = 0
