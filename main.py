@@ -3,6 +3,8 @@ from selenium.webdriver.firefox.options import Options
 import csv, os, random, time
 from bs4 import BeautifulSoup
 from urllib.request import urlretrieve
+from urllib.parse import unquote
+from PIL import Image
 
 # Отключаем GUI браузера
 
@@ -33,7 +35,7 @@ for row in list(reader):
     if not os.path.exists(rootdir + '/imgs/' + category):
         os.mkdir(rootdir + '/imgs/' + category)
     if not row[0] == '':
-        if not os.path.isfile(rootdir + '/imgs/' + category +  '/' + row[0] + '/' + row[0] + '_' + str(por) + '.png'):
+        if not os.path.isfile(rootdir + '/imgs/' + category + '/' + row[0] + '_' + str(por) + '.png'):
             os.chdir(rootdir)
 
             # Загружаем страницу и ее код
@@ -42,21 +44,19 @@ for row in list(reader):
                 driver.get('https://yandex.ru/images/search?text=' + row[1])
                 soup = BeautifulSoup(driver.page_source, features='html5lib')
                 driver.quit()
-                img = 'https:' + soup.findAll('img', {"class": "serp-item__thumb justifier__thumb"}, src = True)[por - 1]['src']
+                img = unquote(soup.findAll('a', {"class": "serp-item__link"})[por - 1]['href'].split('&')[1][8:])
             except IndexError:
                 time.sleep(random.uniform(10, 20))
                 driver = Firefox(executable_path=os.getcwd() + '/geckodriver', options = options)
                 driver.get('https://yandex.ru/images/search?text=' + row[1])
                 soup = BeautifulSoup(driver.page_source, features='html5lib')
                 driver.quit()
-                img = 'https:' + soup.findAll('img', {"class": "serp-item__thumb justifier__thumb"}, src = True)[por - 1]['src']
+                img = unquote(soup.findAll('a', {"class": "serp-item__link"})[por - 1]['href'].split('&')[1][8:])
             os.chdir(rootdir + '/imgs/' + category)
 
             # Скачиваем 1 изображение из Яндекс.Картинок в папку с артикулом
 
-            if not os.path.exists(rootdir + '/imgs/' + '/' + row[0]):
-                os.mkdir(rootdir + '/imgs/' + category + '/' + row[0])
-            os.chdir(rootdir + '/imgs/' + category + '/' + row[0])
+            os.chdir(rootdir + '/imgs/' + category)
             urlretrieve(img, row[0] + '_' + str(por) + '.png')
 
             # Ждем следующий запрос
